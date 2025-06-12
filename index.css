@@ -6,14 +6,18 @@ body {
   margin: auto;
 }
 
-.row {
+.row,
+.header-row {
   display: flex;
   justify-content: space-between;
   background-color: var(--tile-background);
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
   border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.row {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -22,41 +26,34 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.header-row {
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--tile-background);
-  padding: 14px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  font-weight: bold;
-}
-
 .cell {
-  margin: 0 5px;
-  padding-left: 8px;
+  font-size: 16px;
+  display: flex;
   text-align: left;
+  padding-left: 8px;
   border-left: 1px solid #555;
   color: var(--text);
-  font-size: 16px;
+  box-sizing: border-box;
+
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-row .cell {
+  font-size: 18px;
 }
 
 .cell:first-child {
-    padding-left: 0;
-    border-left: none;
+  padding-left: 0;
+  border-left: none;
 }
-
-.flex-1 { flex: 0.85; }
-.flex-2 { flex: 3;    }
-.flex-3 { flex: 8;    }
-.flex-4 { flex: 0.55; }
 
 .add-button {
   margin: 10px auto 10px auto;
-  max-width: 800px;
-  background-color: #3a3a3a;
+  width: 33%;
+  background-color: var(--tile-background);
   color: var(--text);
   padding: 6px;
   border-radius: 6px;
@@ -71,19 +68,90 @@ body {
 }
 
 .input-cell {
+  font-size: 16px;
+  color: var(--text);
+  font-family: sans-serif;
+  flex: 1;
+  height: auto;
   width: 100%;
+  border: none;
+  outline: none;
+  background: none;
   resize: none;
   overflow: hidden;
-  margin: 0 5px;
-  margin-left: 0px;
-  padding-left: 0px;
-  text-align: left;
-  border-left: 1px solid #555;
-  color: var(--text);
+  line-height: 1.2;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+.input-cell::placeholder {
+  color: #888;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+.button-row button {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
   border-radius: 4px;
-  background-color: var(--enter-text-background);
   border: none;
-  outline:none;
-  font-family: sans-serif;
-  font-size: 16px;
+}
+
+.cancel-button {
+  background-color: var(--tile-background);
+  color: var(--text);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cancel-button:hover {
+  transform: translateY(-0.75px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.save-button {
+  background-color: #2d5f2e;
+  color: var(--text);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.save-button:hover {
+  transform: translateY(-0.75px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.pop-in {
+  animation: pop-in 0.1s ease-out forwards;
+}
+
+.pop-out {
+  animation: pop-out 0.1s ease-in forwards;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pop-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
 }
