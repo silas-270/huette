@@ -8,7 +8,7 @@ function addRow(text1, text2, text3, text4) {
   texts.forEach((text, index) => {
     const cell = document.createElement('div');
     cell.className = `cell flex-${index + 1}`;
-    cell.textContent = text;
+    cell.innerHTML = formatText(text);
     row.appendChild(cell);
   });
 
