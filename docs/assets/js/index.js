@@ -15,6 +15,12 @@ function addRow(text1, text2, text3, text4) {
   container.insertBefore(row, container.firstChild);
 }
 
+function clearRows() {
+  const container = document.getElementById('container');
+  const rows = container.querySelectorAll('.row');
+  rows.forEach(row => row.remove());
+}
+
 // Neues Feld hinzufügen
 function autoResizeAllInRow(textarea) {
   const row = textarea.closest('.input-row');

@@ -37,8 +37,36 @@ async function sendData (inputs) {
     
     const result = await res.json();
     console.log('Erfolg:', result);
+    // Aktualisieren der Aufrufe
+    fetchAllData();
   } catch (e) {
     console.error('Fehler beim Senden:', e);
   }
-  //addRow(inputs[0], inputs[1], inputs[2], inputs[3]);
 }
+
+// Holt alle gespeicherten Einträge von der API und zeigt sie an.
+async function fetchAllData() {
+  try {
+    const res = await fetch(CONFIG.APIURL);
+
+    if (!res.ok) {
+      const err = await res.text();
+      throw new Error(`Server-Error: ${err}`);
+    }
+
+    const data = await res.json();
+    console.log('Empfangene Daten:', data);
+
+    clearRows();
+    data.forEach(entry => {
+      const formattedDate = `${entry.date.slice(8,10)}.${entry.date.slice(5,7)}.${entry.date.slice(2,4)}`;
+      addRow(formattedDate, entry.person, entry.task, entry.time);
+    });
+
+  } catch (e) {
+    console.error('Fehler beim Abrufen:', e);
+  }
+}
+
+// Initialer Aufruf
+fetchAllData();
