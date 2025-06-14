@@ -1,5 +1,8 @@
-import express from 'express';
-import { insertData } from './db.js';
+const express = require('express');
+const { initDB, insertData } = require('./db');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -7,8 +10,8 @@ const port = process.env.PORT || 3000;
 // JSON-Body parsen
 app.use(express.json());
 
-// CORS (optional, falls Frontend anderswo gehostet wird)
-// import cors from 'cors';
+// Optional: CORS aktivieren
+// const cors = require('cors');
 // app.use(cors());
 
 app.post('/api/data', async (req, res) => {
@@ -27,6 +30,11 @@ app.post('/api/data', async (req, res) => {
 });
 
 app.listen(port, async () => {
-  await initDB();
-  console.log(`Server läuft auf Port ${port}`);
+  try {
+    await initDB(); // Tabelle prüfen/erstellen
+    console.log(`Server läuft auf Port ${port}`);
+  } catch (err) {
+    console.error('Fehler beim Initialisieren der DB:', err);
+    process.exit(1);
+  }
 });

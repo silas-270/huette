@@ -1,17 +1,18 @@
-import { Pool } from 'pg';
-import dotenv from 'dotenv';
+const { Pool } = require('pg');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
-// Railway setzt DATABASE_URL automatisch
+// PostgreSQL-Verbindung (Railway setzt DATABASE_URL automatisch)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: { rejectUnauthorized: false }
 });
 
-export async function initDB() {
+/**
+ * Erstellt die Tabelle, falls sie nicht existiert.
+ */
+async function initDB() {
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS data_entries (
       id SERIAL PRIMARY KEY,
@@ -25,7 +26,10 @@ export async function initDB() {
   await pool.query(createTableQuery);
 }
 
-export async function insertData({ date, text1, text2, text3 }) {
+/**
+ * Insert-Funktion für neue Datensätze.
+ */
+async function insertData({ date, text1, text2, text3 }) {
   const query = `
     INSERT INTO data_entries (entry_date, text1, text2, text3)
     VALUES ($1, $2, $3, $4)
@@ -35,3 +39,5 @@ export async function insertData({ date, text1, text2, text3 }) {
   const res = await pool.query(query, values);
   return res.rows[0];
 }
+
+module.exports = { initDB, insertData };
