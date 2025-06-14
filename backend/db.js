@@ -16,10 +16,10 @@ async function initDB() {
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS data_entries (
       id SERIAL PRIMARY KEY,
-      entry_date DATE NOT NULL,
-      text1 TEXT NOT NULL,
-      text2 TEXT NOT NULL,
-      text3 TEXT NOT NULL,
+      date DATE NOT NULL,
+      person TEXT NOT NULL,
+      task TEXT NOT NULL,
+      time TEXT NOT NULL,
       created_at TIMESTAMP DEFAULT NOW()
     );
   `;
@@ -31,7 +31,7 @@ async function initDB() {
  */
 async function insertData({ date, text1, text2, text3 }) {
   const query = `
-    INSERT INTO data_entries (entry_date, text1, text2, text3)
+    INSERT INTO data_entries (date, person, task, time)
     VALUES ($1, $2, $3, $4)
     RETURNING id, created_at;
   `;
@@ -40,4 +40,14 @@ async function insertData({ date, text1, text2, text3 }) {
   return res.rows[0];
 }
 
-module.exports = { initDB, insertData };
+async function getData() {
+  const query = `
+    SELECT id, date, person, task, time, created_at
+    FROM data_entries
+    ORDER BY date ASC;
+  `;
+  const res = await pool.query(query);
+  return res.rows;
+}
+
+module.exports = { initDB, insertData, getData };

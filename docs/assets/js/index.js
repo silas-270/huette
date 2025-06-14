@@ -147,13 +147,3 @@ function normalizeTimeFormat(timeStr) {
   const hour = h.padStart(2, '0'); // Normalisiert z.B. 2 => 02
   return `${hour}:${m}`;
 }
-
-function saveWithParams(inputs) {
-  inputs[0] = parseDateStringToISO(inputs[0]);
-  inputs[3] = normalizeTimeFormat(inputs[3]);
-
-  console.log('Eingegebene Daten:', inputs);
-  addRow(inputs[0], inputs[1], inputs[2], inputs[3]);
-}
-
-addRow("21.03.25", "was ", "geht ", "00:00");

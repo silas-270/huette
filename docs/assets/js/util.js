@@ -14,16 +14,16 @@ function showNotification(type, message) {
   }, 3000);
 }
 
-/**
- * Sendet vier Strings an die API.
- * @param {string} dateStr  - Datumsstring im Format YYYY-MM-DD
- * @param {string} textA    - Text 1
- * @param {string} textB    - Text 2
- * @param {string} textC    - Text 3
- */
-async function sendData(dateStr, textA, textB, textC) {
+// Sendet vier Strings an die API.
+async function sendData (inputs) {
+  inputs[0] = parseDateStringToISO(inputs[0]);
+  inputs[3] = normalizeTimeFormat(inputs[3]);
+
+  console.log('Eingegebene Daten:', inputs);
+
+  // Senden
   try {
-    const payload = { date: dateStr, text1: textA, text2: textB, text3: textC };
+    const payload = { date: inputs[0], text1: inputs[1], text2: inputs[2], text3: inputs[3] };
     const res = await fetch(CONFIG.APIURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -40,7 +40,5 @@ async function sendData(dateStr, textA, textB, textC) {
   } catch (e) {
     console.error('Fehler beim Senden:', e);
   }
+  //addRow(inputs[0], inputs[1], inputs[2], inputs[3]);
 }
-
-// Beispiel-Aufruf:
-sendData('2025-06-14', 'Hallo', 'Welt', '00:00');

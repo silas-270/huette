@@ -1,5 +1,5 @@
 const express = require('express');
-const { initDB, insertData } = require('./db');
+const { initDB, insertData, getData } = require('./db');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -26,6 +26,16 @@ app.post('/api/data', async (req, res) => {
   } catch (error) {
     console.error('Insert Error:', error);
     res.status(500).send('Datenbankfehler');
+  }
+});
+
+app.get('/api/data', async (req, res) => {
+  try {
+    const allData = await getData();
+    res.json(allData);
+  } catch (err) {
+    console.error('Fehler beim Abrufen:', err);
+    res.status(500).send('Abruffehler');
   }
 });
 
