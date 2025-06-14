@@ -14,7 +14,7 @@ const pool = new Pool({
  */
 async function initDB() {
   const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS data_entries (
+    CREATE TABLE IF NOT EXISTS arbeitszeiten (
       id SERIAL PRIMARY KEY,
       date DATE NOT NULL,
       person TEXT NOT NULL,
@@ -31,7 +31,7 @@ async function initDB() {
  */
 async function insertData({ date, text1, text2, text3 }) {
   const query = `
-    INSERT INTO data_entries (date, person, task, time)
+    INSERT INTO arbeitszeiten (date, person, task, time)
     VALUES ($1, $2, $3, $4)
     RETURNING id, created_at;
   `;
@@ -43,7 +43,7 @@ async function insertData({ date, text1, text2, text3 }) {
 async function getData() {
   const query = `
     SELECT id, date, person, task, time, created_at
-    FROM data_entries
+    FROM arbeitszeiten
     ORDER BY date ASC;
   `;
   const res = await pool.query(query);

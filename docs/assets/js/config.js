@@ -1,3 +1,3 @@
 const CONFIG = {
-    APIURL: 'https://huette-production.up.railway.app'
+    APIURL: 'https://huette-production.up.railway.app/api/data'
 }
