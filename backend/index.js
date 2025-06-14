@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const { initDB, insertData, getData } = require('./db');
 const dotenv = require('dotenv');
 
@@ -10,9 +11,9 @@ const port = process.env.PORT || 8080;
 // JSON-Body parsen
 app.use(express.json());
 
-// Optional: CORS aktivieren
-// const cors = require('cors');
-// app.use(cors());
+// Middleware
+app.use(cors());             // Erlaubt Cross-Origin-Anfragen (CORS)
+app.use(express.json());     // JSON-Body parsen
 
 app.post('/api/data', async (req, res) => {
   try {

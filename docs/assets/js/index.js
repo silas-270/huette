@@ -115,7 +115,7 @@ function showInputRow() {
       return;
     }
 
-    saveWithParams(values);
+    sendData(values);
     showNotification('success', 'Eintrag erfolgreich hinzugefügt.');
     close();
   });
